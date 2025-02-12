@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float sensitivity;
     [SerializeField] float sprintSpeed;
+    [SerializeField] float jumpForce;
+    [SerializeField] float gravity;
+
 
     private float moveFB;
     private float moveLR;
@@ -54,7 +57,19 @@ public class PlayerController : MonoBehaviour
 
         rotY = Mathf.Clamp(rotY, -60f, 60f);
 
+       
+
         Vector3 movement = new Vector3(moveLR, 0, moveFB).normalized * movementSpeed;
+
+        if (Input.GetKeyDown(KeyCode.Space) && cc.isGrounded)
+        {
+            cc.Move(Vector3.up * jumpForce);
+        }
+
+        else
+        {
+            movement.y -= gravity;
+        }
 
         transform.Rotate(0, rotX, 0);
 
